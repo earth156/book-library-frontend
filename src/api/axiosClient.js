@@ -1,0 +1,44 @@
+import axios from 'axios';
+
+// 1. สร้าง Instance ของ Axios พร้อมตั้งค่า URL เริ่มต้น
+const axiosClient = axios.create({
+    baseURL: 'http://localhost:3000/api', // ชี้ไปที่ Backend ของเรา
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+// 2. Interceptor สำหรับ "ก่อน" ส่ง Request (ดักจับเพื่อแนบ Token)
+axiosClient.interceptors.request.use(
+    (config) => {
+        // ดึง Token จาก Local Storage
+        const token = localStorage.getItem('token');
+        if (token) {
+            // ถ้ามี Token ให้แนบไปกับ Header
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// 3. Interceptor สำหรับ "หลัง" รับ Response (ดักจับ Error 401)
+axiosClient.interceptors.response.use(
+    (response) => {
+        // ถ้าสำเร็จ (2xx) ก็ส่งข้อมูลกลับไปปกติ
+        return response;
+    },
+    (error) => {
+        // ถ้า Backend ตอบกลับมาเป็น 401 Unauthorized
+        if (error.response && error.response.status === 401) {
+            console.warn('Unauthorized or Token expired. Logging out...');
+            localStorage.removeItem('token'); // ลบ Token ทิ้ง
+            window.location.href = '/login';  // บังคับเตะกลับไปหน้า Login ทันที
+        }
+        return Promise.reject(error);
+    }
+);
+
+export default axiosClient;
