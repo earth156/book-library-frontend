@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { authService } from '../../services/authService';
 import { Form, Button, Alert, Spinner } from 'react-bootstrap';
+import useLogin from '../hooks/useLogin';
 import './login.css';
 
 /* ── SVG Icons ── */
@@ -97,25 +96,12 @@ const BookshelfIllustration = () => (
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
+    const { login, error, isLoading } = useLogin();
 
-    const handleLogin = async (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        setError('');
-        setLoading(true);
-        try {
-            const data = await authService.login(username, password);
-            localStorage.setItem('token', data.token);
-            navigate('/books');
-        } catch (err) {
-            setError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
-            console.error('Login error:', err);
-        } finally {
-            setLoading(false);
-        }
+        login(username, password);
     };
 
     return (
@@ -198,10 +184,10 @@ const LoginPage = () => {
                         <Button
                             id="login-submit-btn"
                             type="submit"
-                            disabled={loading}
+                            disabled={isLoading}
                             className="login-btn"
                         >
-                            {loading ? (
+                            {isLoading ? (
                                 <>
                                     <Spinner
                                         as="span"
