@@ -32,7 +32,9 @@ axiosClient.interceptors.response.use(
     },
     (error) => {
         // ถ้า Backend ตอบกลับมาเป็น 401 Unauthorized
-        if (error.response && error.response.status === 401) {
+        // ยกเว้น endpoint /login เพื่อป้องกัน redirect loop
+        const isLoginRequest = error.config?.url?.includes('/login');
+        if (error.response && error.response.status === 401 && !isLoginRequest) {
             console.warn('Unauthorized or Token expired. Logging out...');
             localStorage.removeItem('token'); // ลบ Token ทิ้ง
             window.location.href = '/login';  // บังคับเตะกลับไปหน้า Login ทันที
