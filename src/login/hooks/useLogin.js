@@ -3,28 +3,79 @@ import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 
 const useLogin = () => {
-    const [error, setError] = useState('');
+    // ── Form state (Controller เป็นคนถือ) ──
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [fieldErrors, setFieldErrors] = useState({});
+
+    // ── API state ──
+    const [apiError, setApiError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const login = async (username, password) => {
+    // ── Validation logic ──
+    const validate = () => {
+        const errs = {};
+
+        if (!username.trim()) {
+            errs.username = 'กรุณากรอกชื่อผู้ใช้';
+        } else if (username.trim().length < 3) {
+            errs.username = 'ชื่อผู้ใช้ต้องมีอย่างน้อย 3 ตัวอักษร';
+        }
+
+        if (!password) {
+            errs.password = 'กรุณากรอกรหัสผ่าน';
+        } else if (password.length < 4) {
+            errs.password = 'รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร';
+        }
+
+        setFieldErrors(errs);
+        return Object.keys(errs).length === 0;
+    };
+
+    // ── Submit handler ──
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        if (!validate()) return;
+
         setIsLoading(true);
-        setError('');
+        setApiError('');
 
         try {
-            const data = await authService.login(username, password);
+            const data = await authService.login(username.trim(), password);
             localStorage.setItem('token', data.token);
             navigate('/books');
         } catch (err) {
-            setError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+            setApiError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
             console.error('Login error:', err);
         } finally {
             setIsLoading(false);
         }
     };
 
-    return { login, error, isLoading };
+    // ── Clear field error on change ──
+    const clearFieldError = (field) => {
+        if (fieldErrors[field]) {
+            setFieldErrors((prev) => ({ ...prev, [field]: '' }));
+        }
+    };
+
+    return {
+        // Form values
+        username,
+        setUsername,
+        password,
+        setPassword,
+        // Errors
+        fieldErrors,
+        apiError,
+        // State
+        isLoading,
+        // Handlers
+        handleLogin,
+        clearFieldError,
+    };
 };
 
 export default useLogin;
