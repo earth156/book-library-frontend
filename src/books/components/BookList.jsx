@@ -1,4 +1,4 @@
-import '../books.css';
+import '../pages/books.css';
 
 const BookList = ({ books, onDelete }) => {
     if (books.length === 0) {

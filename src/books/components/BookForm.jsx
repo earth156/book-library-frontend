@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../books.css';
+import '../pages/books.css';
 
 const BookForm = ({ categories, authors, onSubmit }) => {
     const [title, setTitle] = useState('');

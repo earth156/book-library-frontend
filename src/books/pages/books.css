@@ -1,0 +1,626 @@
+/* ============================================
+   BOOKS MODULE STYLES
+   ============================================ */
+
+/* ── BooksPage — Layout ── */
+.books-page {
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #e2e8f0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* ── Navbar ── */
+.books-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 60px;
+    background-color: rgba(6, 10, 16, 0.75);
+    border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.books-navbar__brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #f1f5f9;
+    letter-spacing: -0.2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.books-navbar__brand-dot {
+    color: #d97706;
+}
+
+.books-navbar__right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.books-navbar__stats {
+    font-size: 14px;
+    color: #374151;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid #1f2937;
+    background-color: #0d1117;
+}
+
+.books-navbar__stats strong {
+    color: #d97706;
+    font-weight: 600;
+}
+
+.books-navbar__logout {
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 1px solid #a21e0a;
+    border-radius: 7px;
+    color: #6b7280;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.books-navbar__logout:hover {
+    border-color: #513e37;
+    color: #f0e2e2;
+    background-color: #111827;
+}
+
+/* ── Container ── */
+.books-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ── Page header ── */
+.books-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.books-header__left {}
+
+.books-header__eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: #d97706;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+}
+
+.books-header__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+}
+
+.books-header__subtitle {
+    font-size: 15px;
+    color: #374151;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ── Alert boxes ── */
+.books-alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.books-alert--error {
+    border: 1px solid #2d1515;
+    background-color: #160b0b;
+    color: #f87171;
+}
+
+.books-alert--loading {
+    border: 1px solid #1f2937;
+    background-color: #0d1117;
+    color: #4b5563;
+}
+
+/* ── Filter bar ── */
+.books-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background-color: #0d1117;
+    border: 1px solid #1a2233;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.books-filter-bar__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 4px;
+}
+
+.books-filter-bar__select {
+    flex: 1;
+    min-width: 160px;
+    padding: 8px 12px;
+    background-color: #080c14;
+    border: 1px solid #1f2937;
+    border-radius: 7px;
+    color: #cbd5e1;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+}
+
+.books-filter-bar__select:focus {
+    border-color: #d97706;
+}
+
+.books-filter-bar__reset {
+    padding: 8px 14px;
+    background-color: transparent;
+    border: 1px solid #1f2937;
+    border-radius: 7px;
+    color: #4b5563;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.books-filter-bar__reset:hover {
+    color: #9ca3af;
+    border-color: #374151;
+}
+
+.books-filter-bar__count {
+    margin-left: auto;
+    font-size: 14px;
+    color: #374151;
+    white-space: nowrap;
+}
+
+.books-filter-bar__count strong {
+    color: #6b7280;
+}
+
+/* ── Main Grid ── */
+.books-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.books-section-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+}
+
+/* ── BookForm ── */
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    background-color: #0d1117;
+    border-radius: 10px;
+    border: 1px solid #1a2233;
+}
+
+.book-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.book-form__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.book-form__input,
+.book-form__select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    background-color: #1e2536;
+    border: 1px solid #444c5e;
+    border-radius: 7px;
+    color: #ffffff;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.book-form__select {
+    cursor: pointer;
+}
+
+.book-form__input:focus,
+.book-form__select:focus {
+    border-color: rgba(217, 119, 6, 0.6);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.08);
+}
+
+.book-form__input::placeholder {
+    color: #1f2937;
+}
+
+.book-form__input.is-invalid,
+.book-form__select.is-invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    background-image: none !important;
+}
+
+.book-form__error-text {
+    font-size: 12px;
+    color: #f87171;
+    margin-top: 3px;
+    display: block;
+}
+
+.book-form__btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #d97706;
+    border: none;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 2px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.book-form__btn:hover {
+    background-color: #b45309;
+}
+
+.book-form__btn:active {
+    transform: translateY(1px);
+}
+
+/* ── BookList (Table) ── */
+.book-list-card {
+    background-color: #0d1117;
+    border: 1px solid #1a2233;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.book-list-wrapper {
+    overflow-x: auto;
+}
+
+.book-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    color: #94a3b8;
+}
+
+.book-list-table thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #1a2233;
+    background-color: #080c14;
+}
+
+.book-list-table thead th.col-center {
+    text-align: center;
+}
+
+.book-list-table tbody tr {
+    transition: background-color 0.1s ease;
+}
+
+.book-list-table tbody tr:hover {
+    background-color: #111827;
+}
+
+.book-list-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.book-list-table tbody td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #111827;
+    vertical-align: middle;
+}
+
+.book-list-table tbody td.col-index {
+    color: #1f2937;
+    width: 44px;
+    font-size: 14px;
+}
+
+.book-list-table tbody td.col-title {
+    font-weight: 500;
+    color: #e2e8f0;
+}
+
+.book-list-table tbody td.col-badge {
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+
+.book-list-table tbody td.col-center {
+    text-align: center;
+}
+
+/* Category & Author badges */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.badge--category {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.badge--author {
+    background-color: rgba(139, 92, 246, 0.15);
+    color: #c4b5fd;
+    border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+/* Empty state */
+.book-list__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 56px 24px;
+    color: #1f2937;
+}
+
+.book-list__empty-icon {
+    font-size: 36px;
+    opacity: 0.4;
+}
+
+.book-list__empty-text {
+    font-size: 13px;
+    color: #374151;
+}
+
+/* Delete button */
+.book-list__delete-btn {
+    padding: 5px 11px;
+    background-color: transparent;
+    border: 1px solid #ff4d4f;
+    border-radius: 5px;
+    color: #ff4d4f;
+    font-size: 11.5px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.book-list__delete-btn:hover {
+    background-color: rgba(255, 77, 79, 0.1);
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+    .books-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .books-navbar {
+        padding: 0 20px;
+    }
+
+    .books-container {
+        padding: 24px 16px;
+    }
+
+    .books-filter-bar {
+        padding: 12px 14px;
+    }
+}
+
+/* ── Delete Confirm Modal — dark theme ── */
+.books-modal__content {
+    background-color: #0d1117;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    color: #e2e8f0;
+}
+
+.books-modal__header {
+    background-color: #111827;
+    border-bottom: 1px solid #1f2937;
+    padding: 16px 20px;
+    border-radius: 12px 12px 0 0;
+}
+
+.books-modal__header .btn-close {
+    filter: invert(1);
+    opacity: 0.4;
+}
+
+.books-modal__header .btn-close:hover {
+    opacity: 0.7;
+}
+
+.books-modal__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.books-modal__body {
+    background-color: #0d1117;
+    padding: 20px 24px;
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.books-modal__book-name {
+    color: #e2e8f0;
+    font-weight: 600;
+}
+
+.books-modal__warning {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: #4b5563;
+}
+
+.books-modal__footer {
+    background-color: #111827;
+    border-top: 1px solid #1f2937;
+    padding: 14px 20px;
+    border-radius: 0 0 12px 12px;
+    gap: 8px;
+}
+
+.books-modal__btn-cancel {
+    background-color: transparent !important;
+    border: 1px solid #374151 !important;
+    color: #9ca3af !important;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 7px !important;
+}
+
+.books-modal__btn-cancel:hover {
+    background-color: #1f2937 !important;
+    color: #e2e8f0 !important;
+}
+
+.books-modal__btn-confirm {
+    background-color: #dc2626 !important;
+    border-color: #dc2626 !important;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 7px !important;
+}
+
+.books-modal__btn-confirm:hover {
+    background-color: #b91c1c !important;
+    border-color: #b91c1c !important;
+}
+
+/* ── Success Toast — dark theme ── */
+.books-toast--success {
+    background-color: #0d1117 !important;
+    border: 1px solid #14532d !important;
+    border-radius: 10px !important;
+    min-width: 280px;
+}
+
+.books-toast__header {
+    background-color: #052e16 !important;
+    border-bottom: 1px solid #14532d !important;
+    color: #86efac !important;
+    border-radius: 10px 10px 0 0 !important;
+    gap: 8px;
+}
+
+.books-toast__header strong {
+    color: #86efac;
+    font-size: 13px;
+}
+
+.books-toast__header .btn-close {
+    filter: invert(1);
+    opacity: 0.4;
+}
+
+.books-toast__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background-color: #16a34a;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.books-toast__body {
+    background-color: #0d1117 !important;
+    color: #94a3b8 !important;
+    font-size: 13px;
+    padding: 12px 16px;
+    border-radius: 0 0 10px 10px !important;
+}
+
+.books-toast__body strong {
+    color: #e2e8f0;
+}

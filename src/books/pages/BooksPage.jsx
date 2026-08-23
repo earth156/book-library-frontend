@@ -5,7 +5,7 @@ import useBooks from '../hooks/useBooks';
 import BookForm from '../components/BookForm';
 import BookList from '../components/BookList';
 import libraryBg from '../../assets/images/library-bg.jpg';
-import '../books.css';
+import './books.css';
 
 const BooksPage = () => {
     const { books, categories, authors, isLoading, error, addBook, deleteBook } = useBooks();
