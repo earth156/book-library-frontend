@@ -1,12 +1,9 @@
 import axios from 'axios';
 
-// 1. กำหนด Base URL อัตโนมัติ (ชี้ localhost เมื่อรันในเครื่อง / ชี้ Render เมื่อรันออนไลน์)
+// 1. กำหนด Base URL อัตโนมัติ (ใช้ VITE_API_URL หรือ Render ออนไลน์)
 const getBaseURL = () => {
     if (import.meta.env.VITE_API_URL) {
         return import.meta.env.VITE_API_URL;
-    }
-    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-        return 'http://localhost:3000/api';
     }
     return 'https://book-library-backend-cjve.onrender.com/api';
 };
