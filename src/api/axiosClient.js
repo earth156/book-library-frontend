@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// 1. สร้าง Instance ของ Axios พร้อมตั้งค่า URL เริ่มต้น
+// 1. สร้าง Instance ของ Axios พร้อมตั้งค่า URL เริ่มต้น (รองรับทั้ง Dev และ Production)
 const axiosClient = axios.create({
-    baseURL: 'http://localhost:3000/api', // ชี้ไปที่ Backend ของเรา
+    baseURL: import.meta.env.VITE_API_URL || 'https://book-library-backend-cjve.onrender.com/api',
     headers: {
         'Content-Type': 'application/json',
     },

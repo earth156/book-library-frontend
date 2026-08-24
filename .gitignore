@@ -27,3 +27,5 @@ dist-ssr
 .claude
 .windsurf
 skills-lock.json
+
+.env
