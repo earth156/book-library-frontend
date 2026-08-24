@@ -8,12 +8,16 @@ import libraryBg from '../../assets/images/library-bg.jpg';
 import './books.css';
 
 const BooksPage = () => {
-    const { books, categories, authors, isLoading, error, addBook, deleteBook } = useBooks();
+    const { books, categories, authors, isLoading, error, addBook, deleteBook, fetchBookById } = useBooks();
     const navigate = useNavigate();
 
-    // ── Filter state ──
+    // ── Filter & Search state ──
     const [filterCategory, setFilterCategory] = useState('');
     const [filterAuthor, setFilterAuthor] = useState('');
+    const [searchId, setSearchId] = useState('');
+    const [searchResult, setSearchResult] = useState(null);
+    const [searchNotFound, setSearchNotFound] = useState(false);
+    const [isSearching, setIsSearching] = useState(false);
 
     // ── Delete confirm dialog state ──
     const [deleteTarget, setDeleteTarget] = useState(null); // { id, title }
@@ -24,18 +28,48 @@ const BooksPage = () => {
     // ── Success toast state ──
     const [successToast, setSuccessToast] = useState({ show: false, title: '' });
 
-    // ── Client-side filter ──
-    const filteredBooks = books.filter((book) => {
-        const matchCategory = filterCategory ? book.categoryId === parseInt(filterCategory) : true;
-        const matchAuthor = filterAuthor ? book.authorId === parseInt(filterAuthor) : true;
-        return matchCategory && matchAuthor;
-    });
+    // ── Search by ID Handler (ยิง API /api/books/:id) ──
+    const handleSearchById = async (e) => {
+        if (e) e.preventDefault();
+        if (!searchId.trim()) {
+            setSearchResult(null);
+            setSearchNotFound(false);
+            return;
+        }
 
-    const hasActiveFilter = filterCategory || filterAuthor;
+        setIsSearching(true);
+        setSearchNotFound(false);
+        setSearchResult(null);
+
+        const book = await fetchBookById(searchId.trim());
+        setIsSearching(false);
+
+        if (book && book.id) {
+            setSearchResult(book);
+        } else {
+            setSearchNotFound(true);
+        }
+    };
+
+    // ── Client-side filter & search result binding ──
+    const displayBooks = searchResult
+        ? [searchResult]
+        : searchNotFound
+        ? []
+        : books.filter((book) => {
+            const matchCategory = filterCategory ? book.categoryId === parseInt(filterCategory) : true;
+            const matchAuthor = filterAuthor ? book.authorId === parseInt(filterAuthor) : true;
+            return matchCategory && matchAuthor;
+        });
+
+    const hasActiveFilter = filterCategory || filterAuthor || searchId || searchResult || searchNotFound;
 
     const handleResetFilter = () => {
         setFilterCategory('');
         setFilterAuthor('');
+        setSearchId('');
+        setSearchResult(null);
+        setSearchNotFound(false);
     };
 
     // ── Add book handler ──
@@ -213,7 +247,46 @@ const BooksPage = () => {
                     <>
                         {/* ── Filter bar ── */}
                         <div className="books-filter-bar">
-                            <span className="books-filter-bar__label">กรอง</span>
+                            {/* 🔍 Search by ID Form (ยิง API /api/books/:id) */}
+                            <form onSubmit={handleSearchById} className="books-filter-bar__search-form">
+                                <input
+                                    type="number"
+                                    min="1"
+                                    placeholder="ค้นด้วย ID หนังสือ..."
+                                    className="books-filter-bar__input"
+                                    value={searchId}
+                                    onChange={(e) => {
+                                        setSearchId(e.target.value);
+                                        if (!e.target.value.trim()) {
+                                            setSearchResult(null);
+                                            setSearchNotFound(false);
+                                        }
+                                    }}
+                                />
+                                <button type="submit" className="books-filter-bar__search-btn" disabled={isSearching}>
+                                    {isSearching ? (
+                                        '...'
+                                    ) : (
+                                        <>
+                                            <svg
+                                                width="14"
+                                                height="14"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                style={{ marginRight: '6px' }}
+                                            >
+                                                <circle cx="11" cy="11" r="8" />
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                            </svg>
+                                            ค้นหา
+                                        </>
+                                    )}
+                                </button>
+                            </form>
 
                             <select
                                 className="books-filter-bar__select"
@@ -247,9 +320,30 @@ const BooksPage = () => {
                             )}
 
                             <span className="books-filter-bar__count">
-                                แสดง <strong>{filteredBooks.length}</strong> / {books.length} เล่ม
+                                แสดง <strong>{displayBooks.length}</strong> / {books.length} เล่ม
                             </span>
                         </div>
+
+                        {/* ── Search Not Found Warning ── */}
+                        {searchNotFound && (
+                            <div className="books-alert books-alert--error mb-3">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    style={{ marginRight: '8px', flexShrink: 0 }}
+                                >
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                                <span>ไม่พบหนังสือที่มี ID "{searchId}" ในระบบ (404 Not Found)</span>
+                            </div>
+                        )}
 
                         {/* ── Main grid ── */}
                         <div className="books-grid">
@@ -267,12 +361,14 @@ const BooksPage = () => {
                             <div>
                                 <p className="books-section-label">
                                     รายการหนังสือ
-                                    {hasActiveFilter
-                                        ? ` (กรองแล้ว: ${filteredBooks.length} เล่ม)`
+                                    {searchResult
+                                        ? ` (ผลการค้นหา ID: ${searchResult.id})`
+                                        : hasActiveFilter
+                                        ? ` (กรองแล้ว: ${displayBooks.length} เล่ม)`
                                         : ` (${books.length} เล่ม)`}
                                 </p>
                                 <BookList
-                                    books={filteredBooks}
+                                    books={displayBooks}
                                     onDelete={handleDeleteRequest}
                                 />
                             </div>

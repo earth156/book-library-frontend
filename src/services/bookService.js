@@ -8,6 +8,12 @@ export const bookService = {
         return response.data;
     },
 
+    // ดึงหนังสือตาม ID (สำหรับค้นหา)
+    getBookById: async (id) => {
+        const response = await axiosClient.get(`/books/${id}`);
+        return response.data;
+    },
+
     // เพิ่มหนังสือใหม่
     createBook: async (bookData) => {
         const response = await axiosClient.post('/books', bookData);

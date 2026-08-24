@@ -54,7 +54,17 @@ const useBooks = () => {
         }
     };
 
-    return { books, categories, authors, isLoading, error, addBook, deleteBook };
+    const fetchBookById = async (id) => {
+        try {
+            const response = await axiosClient.get(`/books/${id}`);
+            return response.data;
+        } catch (err) {
+            console.error('Fetch book by ID error:', err);
+            return null;
+        }
+    };
+
+    return { books, categories, authors, isLoading, error, addBook, deleteBook, fetchBookById };
 };
 
 export default useBooks;

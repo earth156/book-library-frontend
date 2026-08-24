@@ -1,8 +1,18 @@
 import axios from 'axios';
 
-// 1. สร้าง Instance ของ Axios พร้อมตั้งค่า URL เริ่มต้น (รองรับทั้ง Dev และ Production)
+// 1. กำหนด Base URL อัตโนมัติ (ชี้ localhost เมื่อรันในเครื่อง / ชี้ Render เมื่อรันออนไลน์)
+const getBaseURL = () => {
+    if (import.meta.env.VITE_API_URL) {
+        return import.meta.env.VITE_API_URL;
+    }
+    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+        return 'http://localhost:3000/api';
+    }
+    return 'https://book-library-backend-cjve.onrender.com/api';
+};
+
 const axiosClient = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://book-library-backend-cjve.onrender.com/api',
+    baseURL: getBaseURL(),
     headers: {
         'Content-Type': 'application/json',
     },
