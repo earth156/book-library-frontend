@@ -417,6 +417,8 @@
 .book-list-table tbody td.col-title {
     font-weight: 500;
     color: #e2e8f0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .book-list-table tbody td.col-badge {
@@ -542,8 +544,12 @@
     }
 
     .books-navbar__logout {
-        padding: 6px 12px;
+        padding: 6px 14px;
         font-size: 13px;
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .books-container {
@@ -568,11 +574,16 @@
     .books-filter-bar__select {
         width: 100%;
         min-width: 0;
+        min-height: 40px;
     }
 
     .books-filter-bar__reset {
         width: 100%;
         text-align: center;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .books-filter-bar__count {
@@ -649,7 +660,7 @@
         color: #f1f5f9;
         margin-bottom: 4px;
         word-break: break-word;
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
         min-width: 0;
     }
 
@@ -693,8 +704,12 @@
     .book-list__delete-btn {
         width: 100%;
         text-align: center;
-        padding: 8px;
+        padding: 10px;
         font-size: 13px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 

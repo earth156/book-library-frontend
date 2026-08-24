@@ -9,7 +9,12 @@ const useLogin = () => {
     const [fieldErrors, setFieldErrors] = useState({});
 
     // ── API state ──
-    const [apiError, setApiError] = useState('');
+    const [apiError, setApiError] = useState(() => {
+        if (window.location.search.includes('sessionExpired=true')) {
+            return 'เซสชันของคุณหมดอายุแล้ว กรุณาเข้าสู่ระบบใหม่อีกครั้ง';
+        }
+        return '';
+    });
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
