@@ -30,14 +30,14 @@ const BookList = ({ books, onDelete }) => {
                             <tr key={book.id}>
                                 <td className="col-index">{index + 1}</td>
                                 <td className="col-title">{book.title}</td>
-                                <td className="col-badge">
+                                <td className="col-badge" data-label="หมวดหมู่:">
                                     {book.category
-                                        ? <span className="badge badge--category">{book.category.name}</span>
+                                        ? <span className="badge badge--category" title={book.category.name}>{book.category.name}</span>
                                         : '—'}
                                 </td>
-                                <td className="col-badge">
+                                <td className="col-badge" data-label="ผู้แต่ง:">
                                     {book.author
-                                        ? <span className="badge badge--author">{book.author.name}</span>
+                                        ? <span className="badge badge--author" title={book.author.name}>{book.author.name}</span>
                                         : '—'}
                                 </td>
                                 <td className="col-center">

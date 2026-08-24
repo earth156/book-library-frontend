@@ -86,6 +86,8 @@
 /* ── Container ── */
 .books-container {
     max-width: 1100px;
+    width: 100%;
+    box-sizing: border-box;
     margin: 0 auto;
     padding: 40px 28px;
     display: flex;
@@ -162,6 +164,8 @@
     border: 1px solid #1a2233;
     border-radius: 10px;
     flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .books-filter-bar__label {
@@ -187,6 +191,7 @@
     outline: none;
     cursor: pointer;
     transition: border-color 0.15s ease;
+    box-sizing: border-box;
 }
 
 .books-filter-bar__select:focus {
@@ -205,6 +210,7 @@
     cursor: pointer;
     white-space: nowrap;
     transition: color 0.15s ease, border-color 0.15s ease;
+    box-sizing: border-box;
 }
 
 .books-filter-bar__reset:hover {
@@ -226,9 +232,16 @@
 /* ── Main Grid ── */
 .books-grid {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 300px minmax(0, 1fr);
     gap: 24px;
     align-items: start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.books-grid > * {
+    min-width: 0;
+    max-width: 100%;
 }
 
 .books-section-label {
@@ -249,12 +262,16 @@
     background-color: #0d1117;
     border-radius: 10px;
     border: 1px solid #1a2233;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .book-form__field {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .book-form__label {
@@ -310,6 +327,7 @@
 
 .book-form__btn {
     width: 100%;
+    box-sizing: border-box;
     padding: 12px;
     background-color: #d97706;
     border: none;
@@ -337,14 +355,19 @@
     border: 1px solid #1a2233;
     border-radius: 10px;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .book-list-wrapper {
+    width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .book-list-table {
     width: 100%;
+    min-width: 480px;
     border-collapse: collapse;
     font-size: 16px;
     color: #94a3b8;
@@ -360,6 +383,7 @@
     text-transform: uppercase;
     border-bottom: 1px solid #1a2233;
     background-color: #080c14;
+    white-space: nowrap;
 }
 
 .book-list-table thead th.col-center {
@@ -412,6 +436,12 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 1.5;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    box-sizing: border-box;
 }
 
 .badge--category {
@@ -467,10 +497,10 @@
     color: #ff6b6b;
 }
 
-/* ── Responsive ── */
+/* ── Responsive (RWD) ── */
 @media (max-width: 860px) {
     .books-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .books-navbar {
@@ -482,7 +512,189 @@
     }
 
     .books-filter-bar {
-        padding: 12px 14px;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .books-page {
+        overflow-x: hidden;
+    }
+
+    .books-navbar {
+        padding: 10px 14px;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .books-navbar__brand {
+        font-size: 20px;
+    }
+
+    .books-navbar__right {
+        gap: 8px;
+    }
+
+    .books-navbar__stats {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .books-navbar__logout {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .books-container {
+        padding: 16px 12px;
+        gap: 20px;
+    }
+
+    .books-header__title {
+        font-size: 26px;
+    }
+
+    .books-header__subtitle {
+        font-size: 13px;
+    }
+
+    .books-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .books-filter-bar__select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .books-filter-bar__reset {
+        width: 100%;
+        text-align: center;
+    }
+
+    .books-filter-bar__count {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .book-list-wrapper {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .book-list-table {
+        font-size: 14px;
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    .book-list-table thead th,
+    .book-list-table tbody td {
+        padding: 10px 10px;
+    }
+
+    .badge {
+        font-size: 12px;
+        padding: 3px 8px;
+    }
+
+    /* Mobile vertical card list for books */
+    .book-list-table,
+    .book-list-table tbody,
+    .book-list-table tr,
+    .book-list-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .book-list-table thead {
+        display: none;
+    }
+
+    .book-list-table tbody tr {
+        background-color: #0d1117;
+        border: 1px solid #1a2233;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .book-list-table tbody tr:last-child {
+        margin-bottom: 0;
+    }
+
+    .book-list-table tbody td {
+        padding: 0;
+        border-bottom: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .book-list-table tbody td.col-index {
+        display: none;
+    }
+
+    .book-list-table tbody td.col-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #f1f5f9;
+        margin-bottom: 4px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        min-width: 0;
+    }
+
+    .book-list-table tbody td.col-badge {
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .book-list-table tbody td.col-badge::before {
+        content: attr(data-label);
+        color: #6b7280;
+        font-size: 12px;
+        font-weight: 500;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    .book-list-table tbody td.col-badge .badge {
+        max-width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: right;
+    }
+
+    .book-list-table tbody td.col-center {
+        margin-top: 6px;
+        padding-top: 8px;
+        border-top: 1px dashed #1f2937;
+        justify-content: flex-end;
+    }
+
+    .book-list__delete-btn {
+        width: 100%;
+        text-align: center;
+        padding: 8px;
+        font-size: 13px;
     }
 }
 
