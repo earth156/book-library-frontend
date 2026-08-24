@@ -289,7 +289,7 @@
     box-sizing: border-box;
 }
 
-.books-grid > * {
+.books-grid>* {
     min-width: 0;
     max-width: 100%;
 }
@@ -616,9 +616,11 @@
     }
 
     .books-filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding: 12px;
     }
 
     .books-filter-bar__search-form {
@@ -628,23 +630,29 @@
     }
 
     .books-filter-bar__select {
-        width: 100%;
+        flex: 1 1 calc(50% - 4px);
         min-width: 0;
-        min-height: 40px;
+        max-width: calc(50% - 4px);
+        height: 38px;
+        padding: 6px 8px;
+        font-size: 13px;
     }
 
     .books-filter-bar__reset {
-        width: 100%;
+        flex: 1 1 100%;
         text-align: center;
-        min-height: 40px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 13px;
     }
 
     .books-filter-bar__count {
+        flex: 1 1 100%;
         margin-left: 0;
         text-align: center;
+        font-size: 12px;
     }
 
     .book-list-wrapper {
